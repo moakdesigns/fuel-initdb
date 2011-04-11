@@ -6,6 +6,7 @@ initdb Fuelphp Task
 This task will allow you to create your database scheme from your models.
 
 When ran, this task will:
+
  - Reset any existing migration information.
  - Gather the models in your models directory.
  - Drop any tables that are of the same name as any of your models. (**LOOSING ALL DATA**)
@@ -23,8 +24,8 @@ To allow you to define your data in the models and have it translated to the Dat
 
 **Author:**
 
-Jonathan David Johnson
-me@jondavidjohn.com
-http://jondavidjohn.com
+ - Jonathan David Johnson
+ - me@jondavidjohn.com
+ - http://jondavidjohn.com
 
 
