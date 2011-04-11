@@ -45,7 +45,7 @@ Usage:
 
 Description:
   This task is designed to allow ORM users to build their models first and then build
-  a database starting point for you that matches all your models.
+  a database starting point for you that matches your models.
 
   It utilizes migrations to build your database from the scheme you outline
   in your models.
@@ -55,7 +55,7 @@ Examples:
   php oil refine initdb non/standard/path/to/models/   <--note trailing slash
 
 Project Home:
-  http://github.com/
+  https://github.com/jondavidjohn/fuel-initdb
 HELP;
 
 			\Cli::write($help);
@@ -85,15 +85,14 @@ HELP;
 				{
 					//Truncate the file extension
 					$model_name_array[] = htmlspecialchars(preg_replace('/\..*$/', '', $file));
-					\Cli::write(\Cli::color("Model found! -> ".end($model_name_array),'green'));
+					\Cli::write("Model found! -> ".end($model_name_array),'green');
 				}
 			}
 			closedir($dh);
 			
 			if(empty($model_name_array))
 			{
-				Cli::write(Cli::color("Could not find any models.\n\nExiting...",'red'));
-				die();
+				throw new Exception("Could not find any models.\n\nExiting...");
 			}
 			else 
 			{
@@ -118,8 +117,7 @@ DISCLAIMER;
 				
 				if($response !== 'CONTINUE')
 				{
-					\Cli::write("\nExiting...");
-					die();
+					throw new Exception("\nExiting...");
 				}
 			}
 			\Cli::write();
@@ -133,7 +131,7 @@ DISCLAIMER;
 				if (in_array($table_name, $current_tables))
 				{
 					\DBUtil::drop_table($table_name);
-					\Cli::write(\Cli::color("Table Dropped. -> ".$table_name,'green'));
+					\Cli::write("Table Dropped. -> ".$table_name,'green');
 				}
 			}
 			\Cli::write();
@@ -164,9 +162,8 @@ DISCLAIMER;
 			}
 			\Migrate::latest();
 			
-			$message = \Cli::color("Migrations Complete, Database Built", 'green');
 			\Cli::write();
-			\Cli::write($message);
+			\Cli::write("Migrations Complete, Database Built", 'green');
 		}
 	}
 }
