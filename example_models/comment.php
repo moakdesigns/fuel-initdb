@@ -5,7 +5,7 @@
  * @package initdb
  * @author jondavidjohn
  */
-class Model_Comment extends Orm\Model {
+class Model_Comment extends Orm\Model {      //<--- Singular Capitalized Element name `Model_Element`
 	
 	public static $_table_name = 'comments'; //<--- this will be used for the table name (must be public)
 	

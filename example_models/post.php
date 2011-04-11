@@ -5,11 +5,11 @@
  * @package initdb
  * @author jondavidjohn
  */
-class Model_Post extends Orm\Model {
+class Model_Post extends Orm\Model {         //<--- Singular Capitalized Element name `Model_Element`
 
-	public static $_table_name = 'posts';  //<--- this will be used for the table name (must be public)
+	public static $_table_name = 'posts';    //<--- this will be used for the table name (must be public)
 
-	public static $_properties = array(            //<--- must use id as primary key and make $_properties public
+	public static $_properties = array(      //<--- must use id as primary key and make $_properties public
 		'id'         => array('type' => 'int'),
 		'title'      => array('type' => 'string'),
 		'author'     => array('type' => 'string'),
