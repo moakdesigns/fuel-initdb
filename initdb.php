@@ -18,11 +18,7 @@ namespace Fuel\Tasks;
  *
  * Task that will Generate your DB schema based on your ORM models
  *
- *
- *
- * @package		Fuel
- * @version		1.0
- * @author		jondavidjohn
+ * @author jondavidjohn
  */
 
 class Initdb {
