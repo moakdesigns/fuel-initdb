@@ -17,6 +17,13 @@ When ran, this task will:
 
 To allow you to define your data in the models and have it translated to the Database
 
+**USAGE**
+
+ 1. Copy initdb.php into your fuel/app/tasks directory
+ 2. Construct your models following provided example models
+ 3. Run this command:
+
+    php oil refine initdb 
 
 **Next Goal:**
 
