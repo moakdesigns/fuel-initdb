@@ -1,16 +1,16 @@
 <?
 
 /**
- * Test Comment Model
+ * Example Comment Model
  *
- * @package Fuel
+ * @package initdb
  * @author jondavidjohn
  */
 class Model_Comment extends Orm\Model {
 	
-	public static $_table_name = 'comments';
+	public static $_table_name = 'comments'; //<--- this will be used for the table name (must be public)
 	
-	public static $_properties = array(
+	public static $_properties = array(      //<--- must use id as primary key and make $_properties public
 		'id'         => array('type' => 'int'),
 		'author'     => array('type' => 'string'),
 		'contents'   => array('type' => 'text'),

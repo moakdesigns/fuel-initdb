@@ -1,16 +1,16 @@
 <?
 
 /**
- * Test Post Model
+ * Example Post Model
  *
- * @package Fuel
+ * @package initdb
  * @author jondavidjohn
  */
 class Model_Post extends Orm\Model {
 
-	public static $_table_name = 'posts';
+	public static $_table_name = 'posts';  //<--- this will be used for the table name (must be public)
 
-	public static $_properties = array(
+	public static $_properties = array(            //<--- must use id as primary key and make $_properties public
 		'id'         => array('type' => 'int'),
 		'title'      => array('type' => 'string'),
 		'author'     => array('type' => 'string'),
