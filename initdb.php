@@ -77,7 +77,7 @@ HELP;
 			while ($file = readdir($dh)) 
 			{
 				//make sure file is not a directory or index.html
-				if (!is_dir($dirpath.$file) || $file !== 'index.html') 
+				if (!is_dir($dirpath.$file) && $file !== 'index.html') 
 				{
 					//Truncate the file extension
 					$model_name_array[] = htmlspecialchars(preg_replace('/\..*$/', '', $file));
@@ -88,7 +88,7 @@ HELP;
 			
 			if(empty($model_name_array))
 			{
-				throw new Exception("Could not find any models.\n\nExiting...");
+				throw new \Oil\Exception("Could not find any models.");
 			}
 			else 
 			{
@@ -113,7 +113,7 @@ DISCLAIMER;
 				
 				if($response !== 'CONTINUE')
 				{
-					throw new Exception("\nExiting...");
+					throw new \Oil\Exception("Exiting...");
 				}
 			}
 			\Cli::write();
