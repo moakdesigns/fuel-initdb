@@ -1,5 +1,4 @@
 <?
-
 /**
  * Example Post Model
  *
