@@ -23,10 +23,8 @@ To allow you to define your data in the models and have it translated to the Dat
  2. Construct your models following provided example models
  3. Run this command:
     ```php oil refine initdb``` 
+ 4. Poof! Database Created
 
-**Next Goal:**
-
- - <strike>To add many-to-many mapping table support</strike>
  - Many to Many relationships supported
 
 **Author:**
