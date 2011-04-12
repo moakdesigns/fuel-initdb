@@ -26,7 +26,8 @@ To allow you to define your data in the models and have it translated to the Dat
 
 **Next Goal:**
 
- - To add many-to-many mapping table support
+ - <strike>To add many-to-many mapping table support</strike>
+ - Many to Many relationships supported
 
 **Author:**
 
