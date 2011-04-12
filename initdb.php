@@ -4,12 +4,12 @@
  *
  * Fuel is a fast, lightweight, community driven PHP5 framework.
  *
- * @package    Fuel
- * @version    1.0
- * @author     Fuel Development Team
- * @license    MIT License
+ * @package	   Fuel
+ * @version	   1.0
+ * @author	   Fuel Development Team
+ * @license	   MIT License
  * @copyright  2010 - 2011 Fuel Development Team
- * @link       http://fuelphp.com
+ * @link	   http://fuelphp.com
  */
 
 namespace Fuel\Tasks;
@@ -29,14 +29,13 @@ class Initdb {
 	 *
 	 * @return void
 	 * @author jondavidjohn
-	 */	
+	 */ 
 	public static function run($model_dir = 'fuel/app/classes/model/')
 	{
-		\Cli::write();
 		if (strtolower($model_dir) === "--help" || strtolower($model_dir) === "help")
 		{
 			$help = <<<HELP
-Usage:
+\nUsage:
   php oil refine initdb [optional path to model root (if not default)]
 
 Description:
@@ -50,7 +49,7 @@ Examples:
   php oil refine initdb
   php oil refine initdb non/standard/path/to/models/   <--note trailing slash
 
-Project Home:
+Task Home:
   https://github.com/jondavidjohn/fuel-initdb
 HELP;
 
@@ -69,7 +68,9 @@ HELP;
 					unlink($migrations_dir.$file);
 				}
 			}
-		
+			
+			\Cli::write();
+			
 			//get models from app/classes/model directory
 			$model_name_array = array();
 			$dirpath = $model_dir;
@@ -84,6 +85,7 @@ HELP;
 					\Cli::write("Model found! -> ".end($model_name_array),'green');
 				}
 			}
+			\Cli::write();
 			closedir($dh);
 			
 			if(empty($model_name_array))
@@ -99,7 +101,7 @@ $fire
 
   Ok, not really light on fire, but the intent of this tool is to
   give your project a starting point based on the models you've 
-  already defined.  NOT TO EDIT TABLES MID PROJECT.
+  already defined.	NOT TO EDIT TABLES MID PROJECT.
 
   THIS WILL COMPLETELY RESET YOUR MIGRATIONS AND ANY DATA CONTAINED
   WITHIN THE MODELS YOU ARE TRANSLATING INTO DATABASE TABLES 
@@ -108,7 +110,6 @@ $fire
   What would you like to do?
 DISCLAIMER;
 				\Cli::beep(1);
-				\Cli::write();
 				$response = \Cli::prompt($disclaimer, array('CONTINUE', 'EXIT'));
 				
 				if($response !== 'CONTINUE')
@@ -116,7 +117,9 @@ DISCLAIMER;
 					throw new \Oil\Exception("Exiting...");
 				}
 			}
+			
 			\Cli::write();
+			
 			// drop migrations table if present and all tables with corresponding models to be rebuilt
 			$current_tables = \DB::list_tables();
 			\DBUtil::drop_table('migration');
@@ -132,12 +135,13 @@ DISCLAIMER;
 			}
 			\Cli::write();
 
+			$mapping_tables = array();
 			foreach($model_name_array as $model_name)
 			{
 				$class_name = 'Model_'.ucfirst($model_name);
 				$table_name = $class_name::$_table_name;
 				$properties = $class_name::$_properties;
-				$args       = array('create_'.$table_name);
+				$args		= array('create_'.$table_name);
 			
 				foreach ($properties as $property_name => $property)
 				{
@@ -153,13 +157,47 @@ DISCLAIMER;
 				
 					$args[] = $field_string;
 				}
+				
+				// if $_many_many defined, we need to create a mapping table
+				if(property_exists($class_name,"_many_many"))
+				{
+					foreach ($class_name::$_many_many as $key => $rel)
+					{
+						$name_sort = array($table_name, $key);
+						sort($name_sort);
+						$mapping_table_name = $name_sort[0].'_'.$name_sort[1];
+						
+						if( ! array_key_exists($mapping_table_name, $mapping_tables))
+						{
+							$mapping_tables[$mapping_table_name] = array($rel['key_through_to'].':int', $rel['key_through_from'].':int');
+						}
+					}
+				}
 			
 				\Oil\Generate::migration($args);
 			}
+			
+			//now build mapping tables
+			if ( ! empty($mapping_tables) )
+			{
+				\Cli::write("\nCreating Mapping tables...\n", 'green');
+				
+				foreach($mapping_tables as $name => $table)
+				{
+					$args = array('create_'.$name);
+					foreach($table as $field)
+					{
+						$args[] = $field;
+					}
+					
+					\Oil\Generate::migration($args);
+				}
+			}
+			
+			
 			\Migrate::latest();
 			
-			\Cli::write();
-			\Cli::write("Migrations Complete, Database Built", 'green');
+			\Cli::write("\nMigrations Complete, Database Built", 'green');
 		}
 	}
 }

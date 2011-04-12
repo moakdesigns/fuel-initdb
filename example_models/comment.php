@@ -2,35 +2,33 @@
 /**
  * Example Comment Model
  *
- * @package initdb
  * @author jondavidjohn
  */
-class Model_Comment extends Orm\Model {      //<--- Singular Capitalized Element name `Model_Element`
+class Model_Comment extends Orm\Model {        //--- Singular Entity Model Name
 	
-	public static $_table_name = 'comments'; //<--- this will be used for the table name (must be public)
+	public static $_table_name = 'comments';   //--- This will be used for actual table name
 	
-	public static $_properties = array(      //<--- must use id as primary key and make $_properties public
+	public static $_properties = array(        //--- Make sure all properties are public
 		'id'         => array('type' => 'int'),
 		'author'     => array('type' => 'string'),
 		'contents'   => array('type' => 'text'),
 		'post_id'    => array('type' => 'int'),
-		'created_at' => array('type' => 'timestamp'),
-		'updated_at' => array('type' => 'timestamp'),
+		'created_at' => array('type' => 'int'),
+		'updated_at' => array('type' => 'int'),
 	);
 	
-	protected static $_belongs_to = array(
+	public static $_belongs_to = array(
 		'post' => array(
 			'model_to' => 'Model_Post',
-			'key_from' => 'id',
-			'key_to' => 'post_id',
-			'cascade_save' => true,
-			'cascade_delete' => true,
+			'key_from' => 'post_id',
+			'key_to' => 'id',
 	));
 	
-	protected static $_observers = array(
+	public static $_observers = array(
 		'Orm\\Observer_UpdatedAt' => array('before_save'),
 		'Orm\\Observer_CreatedAt' => array('before_insert'),
 	);
+
 }
 
 /* End of file - comment.php */
