@@ -16,16 +16,15 @@ When ran, this task will:
 **Purpose:**
 
 To allow you to define your data in the models and have it translated to the Database
+ - Many to Many relationships supported
 
 **USAGE**
 
  1. Copy initdb.php into your fuel/app/tasks directory
  2. Construct your models following provided example models
- 3. Run this command:
-    ```php oil refine initdb``` 
+ 3. Run this command: ```php oil refine initdb``` 
  4. Poof! Database Created
 
- - Many to Many relationships supported
 
 **Author:**
 
