@@ -148,11 +148,11 @@ DISCLAIMER;
 					//skip id (assumed primary key)
 					if ($property_name == 'id') { continue; }
 				
-					$field_string = $property_name.':'.$property['type'];
+					$field_string = $property_name.':'.$property['data_type'];
 				
-					if (isset($property['max_length']))
+					if (isset($property['max']))
 					{
-						$field_string .= '['.$property['max_length'].']';
+						$field_string .= '['.$property['max'].']';
 					}
 				
 					$args[] = $field_string;
