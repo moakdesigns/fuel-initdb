@@ -13,7 +13,7 @@ class Model_Post extends Orm\Model {            //--- Singular Entity Model Name
 		'title'      => array('data_type' => 'string'),
 		'author'     => array('data_type' => 'string'),
 		'contents'   => array('data_type' => 'text'),
-		'publish'    => array('data_type' => 'tinyint'),
+		'publish'    => array('data_type' => 'bool'),
 		'created_at' => array('data_type' => 'int'),
 		'updated_at' => array('data_type' => 'int')
 	);
