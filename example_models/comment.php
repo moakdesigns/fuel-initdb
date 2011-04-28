@@ -9,12 +9,12 @@ class Model_Comment extends Orm\Model {        //--- Singular Entity Model Name
 	public static $_table_name = 'comments';   //--- This will be used for actual table name
 	
 	public static $_properties = array(        //--- Make sure all properties are public
-		'id'         => array('type' => 'int'),
-		'author'     => array('type' => 'string'),
-		'contents'   => array('type' => 'text'),
-		'post_id'    => array('type' => 'int'),
-		'created_at' => array('type' => 'int'),
-		'updated_at' => array('type' => 'int'),
+		'id'         => array('data_type' => 'int'),
+		'author'     => array('data_type' => 'string'),
+		'contents'   => array('data_type' => 'text'),
+		'post_id'    => array('data_type' => 'int'),
+		'created_at' => array('data_type' => 'int'),
+		'updated_at' => array('data_type' => 'int'),
 	);
 	
 	public static $_belongs_to = array(
@@ -27,6 +27,7 @@ class Model_Comment extends Orm\Model {        //--- Singular Entity Model Name
 	public static $_observers = array(
 		'Orm\\Observer_UpdatedAt' => array('before_save'),
 		'Orm\\Observer_CreatedAt' => array('before_insert'),
+		'Orm\\Observer_Typing'    => array('before_save', 'after_save', 'after_load')  //-- using the typing observer
 	);
 
 }

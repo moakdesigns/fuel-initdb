@@ -9,13 +9,13 @@ class Model_Post extends Orm\Model {            //--- Singular Entity Model Name
 	public static $_table_name = 'posts';       //--- This will be used for actual table name
                                                 
 	public static $_properties = array(         //--- Make sure all properties are public
-		'id'         => array('type' => 'int'),
-		'title'      => array('type' => 'string'),
-		'author'     => array('type' => 'string'),
-		'contents'   => array('type' => 'text'),
-		'publish'    => array('type' => 'int' , 'max_length' => 1),
-		'created_at' => array('type' => 'int'),
-		'updated_at' => array('type' => 'int')
+		'id'         => array('data_type' => 'int'),
+		'title'      => array('data_type' => 'string'),
+		'author'     => array('data_type' => 'string'),
+		'contents'   => array('data_type' => 'text'),
+		'publish'    => array('data_type' => 'tinyint'),
+		'created_at' => array('data_type' => 'int'),
+		'updated_at' => array('data_type' => 'int')
 	);
 
 	public static $_has_many = array(
@@ -42,6 +42,7 @@ class Model_Post extends Orm\Model {            //--- Singular Entity Model Name
 	public static $_observers = array(
 		'Orm\\Observer_UpdatedAt' => array('before_save'),
 		'Orm\\Observer_CreatedAt' => array('before_insert'),
+		'Orm\\Observer_Typing'    => array('before_save', 'after_save', 'after_load')  //-- using the typing observer
 	);
 }
 

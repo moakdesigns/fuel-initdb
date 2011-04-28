@@ -10,13 +10,13 @@ class Model_User extends Orm\Model {           //--- Singular Entity Model Name
 	public static $_table_name = 'users';      //--- This will be used for actual table name
                                                
 	public static $_properties = array(        //--- Make sure all properties are public
-		'id'         => array('type' => 'int'),
-		'first_name' => array('type' => 'string'),
-		'last_name'  => array('type' => 'string'),
-		'birthday'   => array('type' => 'datetime'),
-		'color'      => array('type' => 'string'),
-		'created_at' => array('type' => 'int'),
-		'updated_at' => array('type' => 'int')
+		'id'         => array('data_type' => 'int'),
+		'first_name' => array('data_type' => 'string'),
+		'last_name'  => array('data_type' => 'string'),
+		'birthday'   => array('data_type' => 'datetime'),
+		'color'      => array('data_type' => 'string'),
+		'created_at' => array('data_type' => 'int'),
+		'updated_at' => array('data_type' => 'int')
 	);
 
 	public static $_many_many = array(
@@ -35,6 +35,7 @@ class Model_User extends Orm\Model {           //--- Singular Entity Model Name
 	public static $_observers = array(
 		'Orm\\Observer_UpdatedAt' => array('before_save'),
 		'Orm\\Observer_CreatedAt' => array('before_insert'),
+		'Orm\\Observer_Typing'    => array('before_save', 'after_save', 'after_load')  //-- using the typing observer
 	);
 }
 
