@@ -30,8 +30,9 @@ class Initdb {
 	 * @return void
 	 * @author jondavidjohn
 	 */ 
-	public static function run($model_dir = 'fuel/app/classes/model/')
+	public static function run()
 	{
+	    $model_dir = APPPATH.'classes/model';
 		if (strtolower($model_dir) === "--help" || strtolower($model_dir) === "help")
 		{
 			$help = <<<HELP
@@ -58,12 +59,12 @@ HELP;
 		else
 		{
 			// first remove any migration files
-			$migrations_dir = 'fuel/app/migrations/';
+			$migrations_dir = APPPATH.'migrations';
 			$md = opendir($migrations_dir);
 			while($file = readdir($md))
 			{
 				//make sure file is not a directory or parent
-				if ( ! is_dir($migrations_dir.$file) && $file != '..' )
+				if ( ! is_dir($migrations_dir.$file) && $file != '..' && $file != '.' )
 				{
 					unlink($migrations_dir.$file);
 				}
@@ -78,11 +79,12 @@ HELP;
 			while ($file = readdir($dh)) 
 			{
 				//make sure file is not a directory or index.html
-				if (!is_dir($dirpath.$file) && $file !== 'index.html') 
+				if (!is_dir($dirpath.$file) && $file !== 'index.html' && $file != '.' && $file != '..') 
 				{
 					//Truncate the file extension
 					$model_name_array[] = htmlspecialchars(preg_replace('/\..*$/', '', $file));
 					\Cli::write("Model found! -> ".end($model_name_array),'green');
+					
 				}
 			}
 			\Cli::write();
