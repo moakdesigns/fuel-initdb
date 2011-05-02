@@ -37,7 +37,7 @@ class Initdb {
 		{
 			$help = <<<HELP
 \nUsage:
-  php oil refine initdb [optional path to model root (if not default)]
+  php oil refine initdb
 
 Description:
   This task is designed to allow ORM users to build their models first and then build
@@ -45,10 +45,6 @@ Description:
 
   It utilizes migrations to build your database from the scheme you outline
   in your models.
-
-Examples:
-  php oil refine initdb
-  php oil refine initdb non/standard/path/to/models/   <--note trailing slash
 
 Task Home:
   https://github.com/jondavidjohn/fuel-initdb
