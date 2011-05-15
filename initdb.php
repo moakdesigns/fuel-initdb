@@ -60,9 +60,9 @@ HELP;
 			while($file = readdir($md))
 			{
 				//make sure file is not a directory or parent
-				if ( ! is_dir($migrations_dir.$file) && $file != '..' && $file != '.' )
+				if ( ! is_dir($migrations_dir.$file) && $file != '..' && $file != '.' && $file != '.gitkeep' )
 				{
-					unlink($migrations_dir.$file);
+					unlink($migrations_dir.'/'.$file);
 				}
 			}
 			
@@ -75,7 +75,7 @@ HELP;
 			while ($file = readdir($dh)) 
 			{
 				//make sure file is not a directory or index.html
-				if (!is_dir($dirpath.$file) && $file !== 'index.html' && $file != '.' && $file != '..') 
+				if (!is_dir($dirpath.$file) && $file !== 'index.html' && $file != '.' && $file != '..' && $file != '.gitkeep') 
 				{
 					//Truncate the file extension
 					$model_name_array[] = htmlspecialchars(preg_replace('/\..*$/', '', $file));
@@ -200,4 +200,4 @@ DISCLAIMER;
 	}
 }
 
-/* End of file tasks/syncdb.php */
+/* End of file initdb.php */
