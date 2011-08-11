@@ -1,5 +1,4 @@
-<?
-
+<?php
 /**
  * Example User Model
  *
@@ -7,9 +6,7 @@
  */
 class Model_User extends Orm\Model {           //--- Singular Entity Model Name
                                                
-	public static $_table_name = 'users';      //--- This will be used for actual table name
-                                               
-	public static $_properties = array(        //--- Make sure all properties are public
+	public static $_properties = array(
 		'id'         => array('data_type' => 'int'),
 		'first_name' => array('data_type' => 'string'),
 		'last_name'  => array('data_type' => 'string'),
