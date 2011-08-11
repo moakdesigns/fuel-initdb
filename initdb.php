@@ -25,7 +25,8 @@ class Initdb {
 
 
 	/**
-	 * Returns the table name
+	 * Returns the table name from class table_name property when available 
+	 * or from model_name with an 's' 
 	 *
 	 * @return table_name
 	 * @author dimitridamasceno
@@ -42,12 +43,12 @@ class Initdb {
 	/**
 	 * Returns the class name
 	 *
-	 * @return table_name
+	 * @return class_name
 	 * @author dimitridamasceno
 	 */ 
 	public static function className($model_name = NULL)
 	{
-		return 'Model_'.$model_name;
+		return 'Model_'.ucfirst($model_name);
 	}
 	
 	/**
