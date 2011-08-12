@@ -6,7 +6,9 @@
  */
 class Model_User extends Orm\Model {           //--- Singular Entity Model Name
                                                
-	public static $_properties = array(
+    //public static $_table_name = 'posts';    //--- If table name is not provided one will be generated from the class name
+
+	public static $_properties = array(        
 		'id'         => array('data_type' => 'int'),
 		'first_name' => array('data_type' => 'string'),
 		'last_name'  => array('data_type' => 'string'),
