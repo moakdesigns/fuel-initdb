@@ -25,6 +25,41 @@ class Initdb {
 
 
 	/**
+	 * Returns the table name from class table_name property when available 
+	 * or from model_name with an 's' 
+	 *
+	 * @return table_name
+	 * @author dimitridamasceno
+	 */ 
+	public static function table_name($model_name = NULL)
+	{
+		$class_name = self::class_name($model_name);
+		if(property_exists($class_name,'_table_name')){
+			$table_name = $class_name::$_table_name;
+		} else { 
+			$table_name = $model_name.'s';
+			\Cli::write('Setting table name to '.$table_name);
+		}
+		return $table_name;
+	}
+	
+	/**
+	 * Returns the class name
+	 *
+	 * @return class_name
+	 * @author dimitridamasceno
+	 */ 
+	public static function class_name($model_name = NULL)
+	{
+		$class_name = 'Model_'.ucfirst($model_name);
+		if(!class_exists($class_name)){
+			throw new \Oil\Exception("Could not find class:".$class_name);
+		} else {
+			return $class_name;
+		}
+	}
+	
+	/**
 	 * Task that will Generate your DB schema based on your ORM models
 	 *
 	 * @return void
@@ -123,8 +158,8 @@ DISCLAIMER;
 			\DBUtil::drop_table('migration');
 			foreach($model_name_array as $model_name)
 			{
-				$class_name = 'Model_'.ucfirst($model_name);
-				$table_name = $class_name::$_table_name;
+				$class_name = self::class_name($model_name);
+				$table_name = self::table_name($model_name);
 				if (in_array($table_name, $current_tables))
 				{
 					\DBUtil::drop_table($table_name);
@@ -136,9 +171,9 @@ DISCLAIMER;
 			$mapping_tables = array();
 			foreach($model_name_array as $model_name)
 			{
-				$class_name = 'Model_'.ucfirst($model_name);
-				$table_name = $class_name::$_table_name;
-				$properties = $class_name::$_properties;
+				$class_name = self::class_name($model_name);
+				$table_name = self::table_name($model_name);
+				$properties = $class_name::properties(); // This allow to keep properties private
 				$args		= array('create_'.$table_name);
 			
 				foreach ($properties as $property_name => $property)
@@ -146,7 +181,11 @@ DISCLAIMER;
 					//skip id (assumed primary key)
 					if ($property_name == 'id') { continue; }
 				
-					$field_string = $property_name.':'.$property['data_type'];
+					if(isset($property['data_type'])){
+						$field_string = $property_name.':'.$property['data_type'];
+					} elseif(isset($property['type'])) {
+						$field_string = $property_name.':'.$property['type'];
+					}
 				
 					if (isset($property['max']))
 					{
