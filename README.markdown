@@ -30,6 +30,6 @@ To allow you to define your data in the models and have it translated to the Dat
 
  - Jonathan David Johnson
  - me@jondavidjohn.com
- - http://jondavidjohn.com
+ - http://jondavidjohn.com/
 
 
